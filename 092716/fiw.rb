@@ -71,6 +71,14 @@ def three_nos_to_words(x)
 end
 
 def fiw(x)
+    x = String x
+    if x[0] == "-"
+        x = x[1..-1]
+        is_neg = true 
+    else
+        is_neg = false
+    end
+
     x_array = x.split("")
     outer_array = []
     inner_array = []
@@ -98,26 +106,35 @@ def fiw(x)
         thousand_text = three_nos_to_words(outer_array[2])
         thousand_text.strip.empty? ? thousand_text = thousand_text.strip : thousand_text = thousand_text.strip + " thousand"
         unit_text = three_nos_to_words(outer_array[3])
+
+        output = "#{billion_text}, #{million_text}, #{thousand_text}, #{unit_text}"
     elsif length == 3
         million_text = three_nos_to_words(outer_array[0]) + " million"
         thousand_text = three_nos_to_words(outer_array[1])
         thousand_text.strip.empty? ? thousand_text = thousand_text.strip : thousand_text = thousand_text.strip + " thousand"
         unit_text = three_nos_to_words(outer_array[2])
+        output = "#{million_text}, #{thousand_text}, #{unit_text}"
     elsif length == 2
         thousand_text = three_nos_to_words(outer_array[0]) + " thousand"
         unit_text = three_nos_to_words(outer_array[1])
+        output = "#{thousand_text}, #{unit_text}"
     elsif length == 1
         unit_text = three_nos_to_words(outer_array[0])
+        output = "#{unit_text}"
     else
-        puts "something is wrong" 
+        output =  "something is wrong" 
     end
-    puts "#{billion_text} #{million_text} #{thousand_text} #{unit_text}"
-    
+
+    if is_neg
+        puts ("NEGATIVE " + output.upcase) 
+    else
+        puts output.upcase
+    end
 end
 
-fiw("1000")
-fiw("1009009")
-fiw("1111122980")
+fiw(180441)
+fiw(-1009009)
+fiw(1111122980)
 #puts three_nos_to_words("000")
 # puts three_nos_to_words("190")
 # puts three_nos_to_words("09")
